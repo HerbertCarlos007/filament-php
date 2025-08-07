@@ -25,15 +25,15 @@ class InventoryResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->required(),
                 Forms\Components\TextInput::make('quantity')
                     ->required()
                     ->numeric(),
@@ -47,19 +47,21 @@ class InventoryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image')
+                    ->circular()
+                    ->label('Imagem'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Imagem'),
                 Tables\Columns\TextColumn::make('quantity')
                     ->label('Quantidade')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('category_id')
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Categoria')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
